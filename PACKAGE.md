@@ -9,57 +9,67 @@ npm install @manzar-hassan/authflow
 ```
 
 ## Requirements
-- .npmrc file
-- React ^19.0.0
-- React DOM ^19.0.0
-- Tailwindcss >=3.4.17
+- React >=18.0.0
+- React DOM >=18.0.0
+- TailwindCSS >=3.4.17
 - react-hot-toast >=2.5.2
 
 ## Components
 
 ### Card
-A simple card component for displaying content.
-
-```jsx
+Basic card component for content display.
+```tsx
 import { Card } from "@manzar-hassan/authflow";
 
 <Card
   title="Your Title"
   description="Your Description"
+  className="custom-class" // Optional
 />
 ```
 
-### SignIn
-Pre-built sign-in component with form handling.
+### SignIn/SignUp
+Authentication form components with built-in state management.
+```tsx
+import { SignIn, SignUp } from "@manzar-hassan/authflow";
 
-```jsx
-import { SignIn } from "@manzar-hassan/authflow";
+<SignIn
+  onSuccess={(response) => {}}
+  onError={(error) => {}}
+  className="custom-class"
+/>
 
-<SignIn />
-```
-
-### SignUp
-Pre-built sign-up component with form handling.
-
-```jsx
-import { SignUp } from "@manzar-hassan/authflow";
-
-<SignUp />
+<SignUp
+  onSuccess={(response) => {}}
+  onError={(error) => {}}
+  className="custom-class"
+/>
 ```
 
 ### CustomToast
-Toast notification component built on react-hot-toast.
-
-```jsx
+Toast notification wrapper for react-hot-toast.
+```tsx
 import { CustomToast } from "@manzar-hassan/authflow";
 
-<CustomToast />
+<CustomToast message="Operation successful" type="success" />
 ```
 
-## Utilities
-
-### createRouteMatcher
-Utility for route matching and navigation.
+## Hooks
 
 ### useAuth
-Custom hook for handling authentication state and operations.
+Authentication state management hook.
+```tsx
+const { signIn, signUp, signOut, isLoading, isAuthenticated } = useAuth({
+  baseUrl: "YOUR_API_URL",
+  navigation: {
+    navigate: (path) => {}
+  }
+});
+```
+
+## Build Configuration
+The package uses tsup for building, supporting both ESM and CommonJS formats:
+- Entry point: src/index.tsx
+- Output: dist/index.mjs (ESM), dist/index.js (CJS)
+- TypeScript definitions included
+- External dependencies: react, react-dom

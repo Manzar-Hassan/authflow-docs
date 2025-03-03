@@ -1,7 +1,7 @@
 # Authflow Frontend Documentation
 
 ## Overview
-Next.js frontend application showcasing the implementation of @manzar-hassan/authflow package.
+Next.js frontend application demonstrating @manzar-hassan/authflow package implementation.
 
 ## Tech Stack
 - Next.js 15.2.0
@@ -9,8 +9,19 @@ Next.js frontend application showcasing the implementation of @manzar-hassan/aut
 - TailwindCSS 3.4.17
 - TypeScript 5.7.3
 
-## Getting Started
+## Project Structure
+```
+authflow-frontend/
+├── app/                # Next.js app directory
+│   ├── page.js        # Home page
+│   ├── signin/        # Sign-in route
+│   ├── signup/        # Sign-up route
+│   └── layout.js      # Root layout
+├── public/            # Static assets
+└── tailwind.config.js # Tailwind configuration
+```
 
+## Development
 1. Install dependencies:
 ```bash
 npm install
@@ -21,26 +32,18 @@ npm install
 npm run dev
 ```
 
-The application will be available at http://localhost:3000
+## Deployment
+Supports multiple deployment options:
 
-## Project Structure
-```
-authflow-frontend/
-├── app/
-│   ├── page.js          # Home page
-│   ├── signin/          # Sign-in route
-│   ├── signup/          # Sign-up route
-│   └── layout.js        # Root layout
-├── public/              # Static assets
-└── tailwind.config.mjs  # Tailwind configuration
-```
+### Vercel (Recommended)
+1. Push to GitHub
+2. Connect to Vercel
+3. Configure build settings:
+   - Build Command: npm run build
+   - Output Directory: .next
+   - Install Command: npm install
 
-## Routes
-- `/` - Home page with demo card
-- `/signin` - Authentication sign-in page
-- `/signup` - User registration page
-
-## Configuration
-- TailwindCSS is configured to scan both local components and @manzar-hassan/authflow components
-- Uses Geist font family for typography
-- Includes custom toast notifications setup
+### Manual/VPS
+1. Build: `npm run build`
+2. Install PM2: `npm install -g pm2`
+3. Start: `pm2 start npm --name "authflow-frontend" -- start`

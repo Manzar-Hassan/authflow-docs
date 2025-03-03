@@ -1,59 +1,53 @@
 # Authflow Backend Documentation
 
 ## Overview
-Django-based backend API providing authentication endpoints and user management.
+Django-based authentication API with JWT support.
 
 ## Tech Stack
 - Django
 - Django REST Framework
-- SimpleJWT for JWT authentication
+- SimpleJWT
+- Gunicorn (Production)
 
 ## API Endpoints
 
 ### Authentication
-- `POST /api/auth/signup/` - Register new user
-  - Now uses Django's built-in password hashing
-  - Improved error handling and validation
+- `POST /api/auth/signup/` - User registration
+  ```json
+  {
+    "username": "string",
+    "email": "string",
+    "password": "string"
+  }
+  ```
 - `POST /api/auth/signin/` - User login
-  - Enhanced error messages
-  - Added debug logging
-  - Improved user verification
-- `POST /api/token/` - Obtain JWT tokens
-- `POST /api/token/refresh/` - Refresh JWT token
+- `POST /api/token/` - JWT token generation
+- `POST /api/token/refresh/` - Token refresh
 
-### Authentication Flow
-1. User Registration (`/api/auth/signup/`):
-   - Validates username and password
-   - Creates user with properly hashed password using `create_user`
-   - Returns success response with user details
+### Protected Routes
+- `GET /api/dashboard/` - Protected dashboard data
 
-2. User Login (`/api/auth/signin/`):
-   - Verifies user existence
-   - Authenticates credentials
-   - Issues JWT tokens upon success
-   - Provides detailed error messages on failure
+## Deployment Options
 
-### Error Handling
-- Non-existent user: Returns 401 with specific message
-- Invalid credentials: Returns 401 with authentication failure message
-- Missing fields: Returns 400 with required fields message
-- Server errors: Returns 500 with error details (in debug mode)
+### Ubuntu/Nginx
+Full setup process in DEPLOYMENT.md
 
-### Debugging
-Added logging for authentication process:
-- Login attempts
-- User existence checks
-- Authentication results
-- Error details
+### Render
+Using render.yaml configuration:
+- Region: Ohio
+- Python version: 3.9.0
+- Build: pip install -r requirements.txt
+- Start: gunicorn app.wsgi:application
+
+### Heroku
+Using Procfile configuration:
+- web: gunicorn app.wsgi:application
 
 ## Security Considerations
 - Passwords are properly hashed using Django's password hasher
 - No plain text passwords in responses
 - JWT token-based authentication
 - Proper error handling to prevent information leakage
-
-### Protected Routes
-- `GET /api/dashboard/` - Protected dashboard data (requires authentication)
 
 ## Setup
 
